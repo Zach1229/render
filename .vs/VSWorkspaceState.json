@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\config",
+    "\\src\\controllers",
+    "\\src\\models",
+    "\\src\\routes"
+  ],
+  "SelectedNode": "\\src\\controllers\\pokemon.controller.js",
+  "PreviewInSolutionExplorer": false
+}

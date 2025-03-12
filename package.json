@@ -12,9 +12,14 @@
   "description": "",
   "dependencies": {
     "dotenv": "^16.4.7",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.9"
+    "bcrypt": "^5.1.1",
+    "eslint": "^9.20.1",
+    "generate-api-key": "^1.0.2",
+    "nodemon": "^3.1.9",
+    "pg": "^8.14.0"
   }
 }
