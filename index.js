@@ -1,18 +1,19 @@
 import express from 'express';
+import tachesRouter from './src/routes/taches.routes.js';
 
-// Créer une application express
 const app = express();
-
-// Importer les middlewares
 app.use(express.json());
 
+import cors from 'cors';
+app.use(cors());
 
+// Associer les routes aux bons fichiers
+app.use('/', tachesRouter);
 
-
-
-
-
-
+// Middleware pour gérer les routes 404
+app.use((req, res) => {
+    res.status(404).json({ message: `La route ${req.originalUrl} n'est pas définie.` });
+});
 
 // Démarrer le serveur
 const PORT = process.env.PORT || 3000;
