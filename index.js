@@ -10,7 +10,7 @@ const swaggerDocument = JSON.parse(fs.readFileSync('./src/config/documentation.j
 // Options le l'interface, changez le titre "Demo API" pour le nom de votre projet 
 const swaggerOptions = {
     customCss: '.swagger-ui .topbar { display: none }',
-    customSiteTitle: "Demo API"
+    customSiteTitle: "Gestion de tâches"
 };
 
 
