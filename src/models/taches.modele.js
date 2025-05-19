@@ -18,7 +18,7 @@ const getTousTachesSelon = (cle_api) => {
                             INNER JOIN utilisateurs ON utilisateurs.id = taches.utilisateur_id
                             WHERE cle_api = $1`;
 
-        db.query(requete, cle_api, (erreur, resultat) => {
+        db.query(requete, [cle_api], (erreur, resultat) => {
             if (erreur) {
                 console.log(`Erreur sqlState ${erreur.sqlState} : ${erreur.sqlMessage}`);
                 // S'il y a une erreur, je la retourne avec reject()
@@ -45,7 +45,7 @@ const getTachesNonCompleteesSelon = (cle_api) => {
                             WHERE cle_api = $1
                             AND complete = 0`;
 
-        db.query(requete, cle_api, (erreur, resultat) => {
+        db.query(requete, [cle_api], (erreur, resultat) => {
             if (erreur) {
                 console.log(`Erreur sqlState ${erreur.sqlState} : ${erreur.sqlMessage}`);
                 // S'il y a une erreur, je la retourne avec reject()
@@ -69,9 +69,9 @@ const supprimerTache = (id) => {
         
         const requete = 'DELETE FROM taches WHERE id = $1';
 
-        let valeur = id; 
+        let valeur = id;
 
-        db.query(requete, valeur, (erreur, resultat) => {
+        db.query(requete, [valeur], (erreur, resultat) => {
             if (erreur) {
                 console.log(`Erreur sqlState ${erreur.sqlState} : ${erreur.sqlMessage}`);
                 // S'il y a une erreur, je la retourne avec reject()
@@ -97,7 +97,7 @@ const supprimerUneSousTache = (id) => {
 
         let valeur = id; 
 
-        db.query(requete, valeur, (erreur, resultat) => {
+        db.query(requete, [valeur], (erreur, resultat) => {
             if (erreur) {
                 console.log(`Erreur sqlState ${erreur.sqlState} : ${erreur.sqlMessage}`);
                 // S'il y a une erreur, je la retourne avec reject()
