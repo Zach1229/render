@@ -249,4 +249,11 @@ export {
     supprimerTache,
     supprimerUneSousTache,
     ajouterTaches,
-    ajouter
+    ajouterSousTaches,
+    modifierUneTache,
+    modifierUneSousTache,
+    modifierLeStatutPourUneSousTache,
+    modifierLeStatutPourUneTache,
+    creerUtilisateur,
+    trouverUtilisateurSelonCourriel
+};
