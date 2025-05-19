@@ -267,7 +267,7 @@
         ],
         "responses": {
           "200": { "description": "Statut de la tâche modifié" },
-          "400": { "description":  "Champ(s) manquant(s)"}
+          "400": { "description":  "Champ(s) manquant(s)"},
           "401": {"description": "Tâche introuvable"},
           "500": { "description": "Erreur" }
         }
