@@ -392,7 +392,7 @@ const trouverSousTacheSelonIdEtUtilisateurId = (id, utilisateur_id) => {
                 console.log(`Erreur sqlState ${erreur.sqlState} : ${erreur.sqlMessage}`);
                 reject(erreur);
             } else {
-                resolve(resultat.length > 0 ? resultat[0] : null);
+                resolve(resultat.rows.length > 0 ? resultat.rows[0] : null);
             }
         });
     });
