@@ -16,7 +16,7 @@ const getTousTachesSelon = (cle_api) => {
 
         const requete = `SELECT taches.* FROM taches 
                             INNER JOIN utilisateurs ON utilisateurs.id = taches.utilisateur_id
-                            WHERE cle_api = ?`;
+                            WHERE cle_api = $1`;
 
         db.query(requete, cle_api, (erreur, resultat) => {
             if (erreur) {
@@ -25,7 +25,7 @@ const getTousTachesSelon = (cle_api) => {
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat);
+            resolve(resultat.rows);
         });
     });
 };
@@ -42,7 +42,7 @@ const getTachesNonCompleteesSelon = (cle_api) => {
 
         const requete = `SELECT taches.* FROM taches 
                             INNER JOIN utilisateurs ON utilisateurs.id = taches.utilisateur_id
-                            WHERE cle_api = ?
+                            WHERE cle_api = $1
                             AND complete = 0`;
 
         db.query(requete, cle_api, (erreur, resultat) => {
@@ -52,7 +52,7 @@ const getTachesNonCompleteesSelon = (cle_api) => {
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat);
+            resolve(resultat.rows);
         });
     });
 };
@@ -67,7 +67,7 @@ const getTachesNonCompleteesSelon = (cle_api) => {
 const supprimerTache = (id) => {
     return new Promise((resolve, reject) => {
         
-        const requete = 'DELETE FROM taches WHERE id = ?';
+        const requete = 'DELETE FROM taches WHERE id = $1';
 
         let valeur = id; 
 
@@ -78,7 +78,7 @@ const supprimerTache = (id) => {
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat);
+            resolve(resultat.rows);
         });
     });
 };
@@ -93,7 +93,7 @@ const supprimerTache = (id) => {
 const supprimerUneSousTache = (id) => {
     return new Promise((resolve, reject) => {
         
-        const requete = 'DELETE FROM sous_taches WHERE id = ?';
+        const requete = 'DELETE FROM sous_taches WHERE id = $1';
 
         let valeur = id; 
 
@@ -104,7 +104,7 @@ const supprimerUneSousTache = (id) => {
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat);
+            resolve(resultat.rows);
         });
     });
 };
@@ -125,7 +125,7 @@ const ajouterTaches = (utilisateur_id, titre, description, date_debut, date_eche
         
         const valeur = [utilisateur_id, titre, description, date_debut, date_echeance];
 
-        const requete = 'INSERT INTO taches (utilisateur_id, titre, description, date_debut, date_echeance, complete) VALUES (?, ?, ?, ?, ?, 0)';
+        const requete = 'INSERT INTO taches (utilisateur_id, titre, description, date_debut, date_echeance, complete) VALUES ($1, $2, $3, $4, $5, $6)';
 
         db.query(requete, valeur, (erreur, resultat) => {
             if (erreur) {
@@ -133,7 +133,7 @@ const ajouterTaches = (utilisateur_id, titre, description, date_debut, date_eche
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat);
+            resolve(resultat.rows);
         });
     });
 };
@@ -151,7 +151,7 @@ const ajouterSousTaches = (tache_id, titre) => {
         
         const valeur = [tache_id, titre];
 
-        const requete = 'INSERT INTO sous_taches (tache_id, titre, complete) VALUES (?, ?, 0)';
+        const requete = 'INSERT INTO sous_taches (tache_id, titre, complete) VALUES ($1, $2, 0)';
 
         db.query(requete, valeur, (erreur, resultat) => {
             if (erreur) {
@@ -159,7 +159,7 @@ const ajouterSousTaches = (tache_id, titre) => {
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat);
+            resolve(resultat.rows);
         });
     });
 };
@@ -182,7 +182,7 @@ const modifierUneTache = (id ,titre, description, date_debut, date_echeance, com
     return new Promise((resolve, reject) => {
         const valeurs = [titre, description, date_debut, date_echeance, complete, id];
 
-        const requete = 'UPDATE taches SET titre = ?,  description = ?, date_debut = ?, date_echeance = ?, complete = ? WHERE id = ?';
+        const requete = 'UPDATE taches SET titre = $1,  description = $2, date_debut = $3, date_echeance = $4, complete = $5 WHERE id = $6';
 
         db.query(requete, valeurs, (erreur, resultat) => {
             if (erreur) {
@@ -191,7 +191,7 @@ const modifierUneTache = (id ,titre, description, date_debut, date_echeance, com
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat);
+            resolve(resultat.rows);
         });
     });
 };
@@ -211,7 +211,7 @@ const modifierUneSousTache = (id ,titre, complete) => {
     return new Promise((resolve, reject) => {
         const valeurs = [titre, complete, id];
 
-        const requete = 'UPDATE sous_taches SET titre = ?,  complete = ? WHERE id = ?';
+        const requete = 'UPDATE sous_taches SET titre = $1,  complete = $2 WHERE id = $3';
 
         db.query(requete, valeurs, (erreur, resultat) => {
             if (erreur) {
@@ -220,7 +220,7 @@ const modifierUneSousTache = (id ,titre, complete) => {
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat);
+            resolve(resultat.rows);
         });
     });
 };
@@ -237,7 +237,7 @@ const modifierLeStatutPourUneTache = (id, complete) => {
     return new Promise((resolve, reject) => {
         const valeurs = [complete, id];
 
-        const requete = 'UPDATE sous_taches SET complete = ? WHERE id = ?';
+        const requete = 'UPDATE sous_taches SET complete = $1 WHERE id = $2';
 
         db.query(requete, valeurs, (erreur, resultat) => {
             if (erreur) {
@@ -246,7 +246,7 @@ const modifierLeStatutPourUneTache = (id, complete) => {
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat);
+            resolve(resultat.rows);
         });
     });
 };
@@ -263,7 +263,7 @@ const modifierLeStatutPourUneSousTache = (id, complete) => {
     return new Promise((resolve, reject) => {
         const valeurs = [complete, id];
 
-        const requete = 'UPDATE taches SET complete = ? WHERE id = ?';
+        const requete = 'UPDATE taches SET complete = $1 WHERE id = $2';
 
         db.query(requete, valeurs, (erreur, resultat) => {
             if (erreur) {
@@ -272,7 +272,7 @@ const modifierLeStatutPourUneSousTache = (id, complete) => {
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat);
+            resolve(resultat.rows);
         });
     });
 };
@@ -293,7 +293,7 @@ const creerUtilisateur = (nom, prenom, courriel, mot_de_passe, cle_api) => {
 
         const valeurs = [nom, prenom, courriel, mot_de_passe, cle_api];
 
-        const requete = 'INSERT INTO utilisateurs (nom, prenom, courriel, password, cle_api) VALUES (?, ?, ?, ?, ?)';
+        const requete = 'INSERT INTO utilisateurs (nom, prenom, courriel, password, cle_api) VALUES ($1, $2, $3, $4, $5)';
 
         db.query(requete, valeurs, (erreur, resultat) => {
             if (erreur) {
@@ -302,7 +302,7 @@ const creerUtilisateur = (nom, prenom, courriel, mot_de_passe, cle_api) => {
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat);
+            resolve(resultat.rows);
         });
     });;
 };
@@ -316,14 +316,14 @@ const creerUtilisateur = (nom, prenom, courriel, mot_de_passe, cle_api) => {
  */
 const trouverUtilisateurSelonCourriel = (courriel) => {
     return new Promise((resolve, reject) => {
-        const requete = 'SELECT * FROM utilisateurs WHERE courriel = ?';
+        const requete = 'SELECT * FROM utilisateurs WHERE courriel = $1';
 
         db.query(requete, [courriel], (erreur, resultat) => {
             if (erreur) {
                 console.log(`Erreur sqlState ${erreur.sqlState} : ${erreur.sqlMessage}`);
                 reject(erreur);
             } else {
-                resolve(resultat.length > 0 ? resultat[0] : null);
+                resolve(resultat.rows.length > 0 ? resultat.rows[0] : null);
             }
         });
     });
@@ -339,14 +339,14 @@ const trouverUtilisateurSelonCourriel = (courriel) => {
  */
 const trouverTacheSelonTitreEtUtilisateurId = (titre, utilisateur_id) => {
     return new Promise((resolve, reject) => {
-        const requete = 'SELECT * FROM taches WHERE titre = ? AND utilisateur_id = ?';
+        const requete = 'SELECT * FROM taches WHERE titre = $1 AND utilisateur_id = $2';
 
         db.query(requete, [titre, utilisateur_id], (erreur, resultat) => {
             if (erreur) {
                 console.log(`Erreur sqlState ${erreur.sqlState} : ${erreur.sqlMessage}`);
                 reject(erreur);
             } else {
-                resolve(resultat.length > 0 ? resultat[0] : null);
+                resolve(resultat.rows.length > 0 ? resultat.rows[0] : null);
             }
         });
     });
@@ -362,14 +362,14 @@ const trouverTacheSelonTitreEtUtilisateurId = (titre, utilisateur_id) => {
  */
 const trouverTacheSelonIdEtUtilisateurId = (id, utilisateur_id) => {
     return new Promise((resolve, reject) => {
-        const requete = 'SELECT * FROM taches WHERE id = ? AND utilisateur_id = ?';
+        const requete = 'SELECT * FROM taches WHERE id = $1 AND utilisateur_id = $2';
 
         db.query(requete, [id, utilisateur_id], (erreur, resultat) => {
             if (erreur) {
                 console.log(`Erreur sqlState ${erreur.sqlState} : ${erreur.sqlMessage}`);
                 reject(erreur);
             } else {
-                resolve(resultat.length > 0 ? resultat[0] : null);
+                resolve(resultat.rows.length > 0 ? resultat.rows[0] : null);
             }
         });
     });
@@ -385,7 +385,7 @@ const trouverTacheSelonIdEtUtilisateurId = (id, utilisateur_id) => {
  */
 const trouverSousTacheSelonIdEtUtilisateurId = (id, utilisateur_id) => {
     return new Promise((resolve, reject) => {
-        const requete = 'SELECT sous_taches.* FROM sous_taches INNER JOIN taches ON taches.id = sous_taches.tache_id WHERE sous_taches.id = ? AND utilisateur_id = ?';
+        const requete = 'SELECT sous_taches.* FROM sous_taches INNER JOIN taches ON taches.id = sous_taches.tache_id WHERE sous_taches.id = $1 AND utilisateur_id = $2';
 
         db.query(requete, [id, utilisateur_id], (erreur, resultat) => {
             if (erreur) {
@@ -407,14 +407,14 @@ const trouverSousTacheSelonIdEtUtilisateurId = (id, utilisateur_id) => {
  */
 const trouverUtilisateurSelonCleAPI = (cle_api) => {
     return new Promise((resolve, reject) => {
-        const requete = 'SELECT * FROM utilisateurs WHERE cle_api = ?';
+        const requete = 'SELECT * FROM utilisateurs WHERE cle_api = $1';
 
         db.query(requete, [cle_api], (erreur, resultat) => {
             if (erreur) {
                 console.log(`Erreur sqlState ${erreur.sqlState} : ${erreur.sqlMessage}`);
                 reject(erreur);
             } else {
-                resolve(resultat.length > 0 ? resultat[0] : null);
+                resolve(resultat.rows.length > 0 ? resultat.rows[0] : null);
             }
         });
     });
@@ -433,7 +433,7 @@ const genererNouvelleCleAPISelon = (courriel, cle_api) => {
 
         const valeurs = [cle_api, courriel];
         
-        const requete = 'UPDATE utilisateurs SET cle_api = ? WHERE courriel = ?';
+        const requete = 'UPDATE utilisateurs SET cle_api = $1 WHERE courriel = $2';
 
         db.query(requete, valeurs, (erreur, resultat) => {
             if (erreur) {
@@ -442,7 +442,7 @@ const genererNouvelleCleAPISelon = (courriel, cle_api) => {
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat);
+            resolve(resultat.rows);
         });
     });;
 };
@@ -460,7 +460,7 @@ const recupererCleAPISelon = (courriel, mot_de_passe) => {
 
         const valeurs = [courriel, mot_de_passe];
 
-        const requete = 'SELECT cle_api FROM utilisateurs WHERE courriel = ? AND password = ?';
+        const requete = 'SELECT cle_api FROM utilisateurs WHERE courriel = $1 AND password = $2';
 
         db.query(requete, valeurs, (erreur, resultat) => {
             if (erreur) {
@@ -469,7 +469,7 @@ const recupererCleAPISelon = (courriel, mot_de_passe) => {
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat);
+            resolve(resultat.rows);
         });
     });;
 };
@@ -486,7 +486,7 @@ const getNombreUtilisateurSelon = (courriel) => {
 
         const valeur = [courriel];
 
-        const requete = `SELECT COUNT(*) AS count FROM utilisateurs WHERE courriel = ?`;
+        const requete = `SELECT COUNT(*) AS count FROM utilisateurs WHERE courriel = $1`;
 
         db.query(requete, valeur, (erreur, resultat) => {
             if (erreur) {
@@ -495,7 +495,7 @@ const getNombreUtilisateurSelon = (courriel) => {
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat[0].count);
+            resolve(resultat.rows[0].count);
         });
     });
 };
@@ -512,7 +512,7 @@ const validationCle = (cle_api) => {
 
         const valeur = [cle_api];
         
-        const requete = `SELECT count(*) AS count FROM utilisateurs WHERE cle_api = ?`;
+        const requete = `SELECT count(*) AS count FROM utilisateurs WHERE cle_api = $1`;
 
         db.query(requete, valeur, (erreur, resultat) => {
             if (erreur) {
@@ -521,7 +521,7 @@ const validationCle = (cle_api) => {
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat[0].count);
+            resolve(resultat.rows[0].count);
         });
     });
 };
