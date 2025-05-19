@@ -495,7 +495,7 @@ const getNombreUtilisateurSelon = (courriel) => {
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat.rows[0].count);
+            resolve(resultat.rows);
         });
     });
 };
