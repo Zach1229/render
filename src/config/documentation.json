@@ -44,7 +44,7 @@
                 "properties": {
                   "nom": { "type": "string" },
                   "prenom": { "type": "string" },
-                  "mot_de_passe": {"type": "string"},
+                  "mot_de_passe": { "type": "string" },
                   "courriel": { "type": "string" }
                 },
                 "required": [ "nom", "courriel", "prenom", "mot_de_passe" ]
@@ -71,8 +71,8 @@
                 "type": "object",
                 "properties": {
                   "courriel": { "type": "string" },
-                  "mot_de_passe": {"type":  "string"},
-                  "nouvelle_cle": {"type":  "string"}
+                  "mot_de_passe": { "type": "string" },
+                  "nouvelle_cle": { "type": "string" }
                 },
                 "required": [ "courriel", "mot_de_passe" ]
               }
@@ -82,261 +82,251 @@
         "responses": {
           "200": { "description": "Clé API retournée" },
           "404": { "description": "Utilisateur non trouvé" },
-          "500": { "description":  "Erreur"}
-        }
-        }
-      }
-    },
-    "/liste": {
-      "get": {
-        "summary": "Lister les tâches de l'utilisateur",
-        "tags": [ "Tâches" ],
-        "security": [ { "ApiKeyAuth": [] } ],
-        "responses": {
-          "200": { "description": "Liste des tâches" },
-          "500": { "description" :  "Erreur"}
-        }
-      }
-    },
-    "/taches": {
-      "post": {
-        "summary": "Ajouter une tâche",
-        "tags": [ "Tâches" ],
-        "security": [ { "ApiKeyAuth": [] } ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "titre": { "type": "string" },
-                  "description": { "type": "string" },
-                  "date_debut": { "type": "date" },
-                  "date_echeance": { "type": "date" }
-                },
-                "required": [ "titre" ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": { "description": "Tâche ajoutée" },
-          "400": { "description": "Champ(s) manquant(s)" },
-          "401": { "description": "Tâche non trouvée ou utilisateur non trouvé" },
-          "500": { "description": "Erreur" }
-        }
-      }
-    },
-    "/soustaches": {
-      "post": {
-        "summary": "Ajouter une sous-tâche",
-        "tags": [ "Sous-tâches" ],
-        "security": [ { "ApiKeyAuth": [] } ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "tache_titre": { "type": "string" },
-                  "titre": { "type": "string" }
-                },
-                "required": [ "tache_titre", "titre" ]
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": { "description": "Sous-tâche ajoutée" },
-          "400": { "description":  "Champ(s) manquant(s) ou la génération de la clé à échoué."},
-          "500": { "description" :  "Erreur"}
-        }
-      }
-    },
-    "/modifier/{id}": {
-      "put": {
-        "summary": "Modifier une tâche",
-        "tags": [ "Tâches" ],
-        "security": [ { "ApiKeyAuth": [] } ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": { "description": "Tâche modifiée" },
-          "400": { "description": "Champ(s) manquant(s)" },
-          "401": { "description": "Aucune tâche trouvée ou aucun utilisateur" },
-          "500": { "description": "Erreur" }
-        }
-      }
-    },
-    "/modifier/soustache/{id}": {
-      "put": {
-        "summary": "Modifier une sous-tâche",
-        "tags": [ "Sous-tâches" ],
-        "security": [ { "ApiKeyAuth": [] } ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "type": "object",
-                "properties": {
-                  "titre": { "type": "string" },
-                  "complete": { "type": "string" }
-                }
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": { "description": "Sous-tâche modifiée" },
-          "400": { "description": "Champ(s) manquant(s)" },
-          "404": { "description": "Sous-tâche inexistante" },
-          "500": { "description": "Erreur" }
-        }
-      }
-    },
-    "/soustache/{id}/{complete}": {
-      "put": {
-        "summary": "Modifier le statut d'une sous-tâche",
-        "tags": [ "Sous-tâches" ],
-        "security": [ { "ApiKeyAuth": [] } ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          },
-          {
-            "name": "complete",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "boolean" }
-          }
-        ],
-        "responses": {
-          "200": { "description": "Statut de la sous-tâche modifié" },
-          "400": { "description": "Champ(s) manquant(s)" },
-          "401": { "description": "Sous-tâche introuvable" },
-          "500": { "description": "Ereur" }
-        }
-      }
-    },
-    "/{id}/{complete}": {
-      "put": {
-        "summary": "Modifier le statut d'une tâche",
-        "tags": [ "Tâches" ],
-        "security": [ { "ApiKeyAuth": [] } ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          },
-          {
-            "name": "complete",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "boolean" }
-          }
-        ],
-        "responses": {
-          "200": { "description": "Statut de la tâche modifié" },
-          "400": { "description":  "Champ(s) manquant(s)"},
-          "401": {"description": "Tâche introuvable"},
-          "500": { "description": "Erreur" }
-        }
-      }
-    },
-    "/{id}": {
-      "get": {
-        "summary": "Détails d'une tâche",
-        "tags": [ "Tâches" ],
-        "security": [ { "ApiKeyAuth": [] } ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          }
-        ],
-        "responses": {
-          "200": { "description": "Tâche détaillée retournée" },
-          "400": { "description": "Champ(s) manquant(s)" },
-          "40": { "description": "Tâche non trouvée" },
-          "500": { "description": "Erreur" }
-        }
-      },
-      "delete": {
-        "summary": "Supprimer une tâche",
-        "tags": [ "Tâches" ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          }
-        ],
-        "responses": {
-          "200": { "description": "Tâche supprimée" },
-          "401": { "description": "tâche ou utilisateur non trouvé" },
-          "500": { "description": "Erreur" }
-        }
-      }
-    },
-    "/soustache/{id}": {
-      "delete": {
-        "summary": "Supprimer une sous-tâche",
-        "tags": [ "Sous-tâches" ],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "schema": { "type": "integer" }
-          }
-        ],
-        "responses": {
-          "200": { "description": "Sous-tâche supprimée" },
-          "401": { "description": "Sous-tâche ou utilisateur non trouvé" },
           "500": { "description": "Erreur" }
         }
       }
     }
   },
-  "components": {
-    "securitySchemes": {
-      "ApiKeyAuth": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "x-api-key"
+  "/liste": {
+    "get": {
+      "summary": "Lister les tâches de l'utilisateur",
+      "tags": [ "Tâches" ],
+      "security": [ { "ApiKeyAuth": [] } ],
+      "responses": {
+        "200": { "description": "Liste des tâches" },
+        "500": { "description": "Erreur" }
+      }
+    }
+  },
+  "/taches": {
+    "post": {
+      "summary": "Ajouter une tâche",
+      "tags": [ "Tâches" ],
+      "security": [ { "ApiKeyAuth": [] } ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "titre": { "type": "string" },
+                "description": { "type": "string" },
+                "date_debut": { "type": "date" },
+                "date_echeance": { "type": "date" }
+              },
+              "required": [ "titre" ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": { "description": "Tâche ajoutée" },
+        "400": { "description": "Champ(s) manquant(s)" },
+        "401": { "description": "Tâche non trouvée ou utilisateur non trouvé" },
+        "500": { "description": "Erreur" }
+      }
+    }
+  },
+  "/soustaches": {
+    "post": {
+      "summary": "Ajouter une sous-tâche",
+      "tags": [ "Sous-tâches" ],
+      "security": [ { "ApiKeyAuth": [] } ],
+      "requestBody": {
+        "required": true,
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "tache_titre": { "type": "string" },
+                "titre": { "type": "string" }
+              },
+              "required": [ "tache_titre", "titre" ]
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": { "description": "Sous-tâche ajoutée" },
+        "400": { "description": "Champ(s) manquant(s) ou la génération de la clé à échoué." },
+        "500": { "description": "Erreur" }
+      }
+    }
+  },
+  "/modifier/{id}": {
+    "put": {
+      "summary": "Modifier une tâche",
+      "tags": [ "Tâches" ],
+      "security": [ { "ApiKeyAuth": [] } ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": { "description": "Tâche modifiée" },
+        "400": { "description": "Champ(s) manquant(s)" },
+        "401": { "description": "Aucune tâche trouvée ou aucun utilisateur" },
+        "500": { "description": "Erreur" }
+      }
+    }
+  },
+  "/modifier/soustache/{id}": {
+    "put": {
+      "summary": "Modifier une sous-tâche",
+      "tags": [ "Sous-tâches" ],
+      "security": [ { "ApiKeyAuth": [] } ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        }
+      ],
+      "requestBody": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "titre": { "type": "string" },
+                "complete": { "type": "string" }
+              }
+            }
+          }
+        }
+      },
+      "responses": {
+        "200": { "description": "Sous-tâche modifiée" },
+        "400": { "description": "Champ(s) manquant(s)" },
+        "404": { "description": "Sous-tâche inexistante" },
+        "500": { "description": "Erreur" }
+      }
+    }
+  },
+  "/soustache/{id}/{complete}": {
+    "put": {
+      "summary": "Modifier le statut d'une sous-tâche",
+      "tags": [ "Sous-tâches" ],
+      "security": [ { "ApiKeyAuth": [] } ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        },
+        {
+          "name": "complete",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "boolean" }
+        }
+      ],
+      "responses": {
+        "200": { "description": "Statut de la sous-tâche modifié" },
+        "400": { "description": "Champ(s) manquant(s)" },
+        "401": { "description": "Sous-tâche introuvable" },
+        "500": { "description": "Ereur" }
+      }
+    }
+  },
+  "/{id}/{complete}": {
+    "put": {
+      "summary": "Modifier le statut d'une tâche",
+      "tags": [ "Tâches" ],
+      "security": [ { "ApiKeyAuth": [] } ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        },
+        {
+          "name": "complete",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "boolean" }
+        }
+      ],
+      "responses": {
+        "200": { "description": "Statut de la tâche modifié" },
+        "400": { "description": "Champ(s) manquant(s)" },
+        "401": { "description": "Tâche introuvable" },
+        "500": { "description": "Erreur" }
+      }
+    }
+  },
+  "/{id}": {
+    "get": {
+      "summary": "Détails d'une tâche",
+      "tags": [ "Tâches" ],
+      "security": [ { "ApiKeyAuth": [] } ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        }
+      ],
+      "responses": {
+        "200": { "description": "Tâche détaillée retournée" },
+        "400": { "description": "Champ(s) manquant(s)" },
+        "40": { "description": "Tâche non trouvée" },
+        "500": { "description": "Erreur" }
+      }
+    },
+    "delete": {
+      "summary": "Supprimer une tâche",
+      "tags": [ "Tâches" ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        }
+      ],
+      "responses": {
+        "200": { "description": "Tâche supprimée" },
+        "401": { "description": "tâche ou utilisateur non trouvé" },
+        "500": { "description": "Erreur" }
+      }
+    }
+  },
+  "/soustache/{id}": {
+    "delete": {
+      "summary": "Supprimer une sous-tâche",
+      "tags": [ "Sous-tâches" ],
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "integer" }
+        }
+      ],
+      "responses": {
+        "200": { "description": "Sous-tâche supprimée" },
+        "401": { "description": "Sous-tâche ou utilisateur non trouvé" },
+        "500": { "description": "Erreur" }
       }
     }
   }
