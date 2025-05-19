@@ -302,7 +302,7 @@ const creerUtilisateur = (nom, prenom, courriel, mot_de_passe, cle_api) => {
                 reject(erreur);
             }
             // Sinon je retourne le résultat sans faire de validation, c'est possible que le résultat soit vide
-            resolve(resultat.rows);
+            resolve(resultat);
         });
     });;
 };
