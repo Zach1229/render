@@ -1,5 +1,8 @@
-// À ajuster selon la structure
-import db from '../config/db.js';
+// Ancienne connexion à MySQL
+// const db = require("../config/db");
+// Nouvelle connexion à PostGreSQL
+
+import db from "../config/db_pg.js";
 
 /**
  * Méthode permettant de lister tous les tâches d'un utilisateur.

@@ -4,10 +4,17 @@
     "\\src",
     "\\src\\config",
     "\\src\\controllers",
+<<<<<<< HEAD
     "\\src\\middlewares",
     "\\src\\models",
     "\\src\\routes"
   ],
   "SelectedNode": "\\index.js",
+=======
+    "\\src\\models",
+    "\\src\\routes"
+  ],
+  "SelectedNode": "\\src\\controllers\\pokemon.controller.js",
+>>>>>>> bbcb56b1ff3a551048e16fe953ad34a73df8bbb3
   "PreviewInSolutionExplorer": false
 }
