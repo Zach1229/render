@@ -73,7 +73,7 @@ const TrouverUneTacheDetaillee = async (req, res) => {
     const utilisateur = await tachesModeles.trouverUtilisateurSelonCleAPI(cleApi);
 
     if (!utilisateur) {
-        return res.status(401).json({ message: "Utilisateur non trouvé ou clé API invalide" });
+        return res.status(404).json({ message: "Utilisateur non trouvé" });
     }
 
     const utilisateur_id = utilisateur.id;
@@ -126,7 +126,7 @@ const AjouterTaches = async (req, res) => {
         const utilisateur = await tachesModeles.trouverUtilisateurSelonCleAPI(cle_api);
 
         if (!utilisateur) {
-            return res.status(401).json({ message: "Utilisateur non trouvé ou clé API invalide" });
+            return res.status(404).json({ message: "Utilisateur non trouvé ou clé API invalide" });
         }
 
         const utilisateur_id = utilisateur.id;
@@ -179,7 +179,7 @@ const AjouterSousTaches = async (req, res) => {
         const utilisateur = await tachesModeles.trouverUtilisateurSelonCleAPI(cle_api);
 
         if (!utilisateur) {
-            return res.status(401).json({ message: "Utilisateur non trouvé ou clé API invalide" });
+            return res.status(404).json({ message: "Utilisateur non trouvé ou clé API invalide" });
         }
 
         const utilisateur_id = utilisateur.id;
@@ -187,7 +187,7 @@ const AjouterSousTaches = async (req, res) => {
         const tache = await tachesModeles.trouverTacheSelonTitreEtUtilisateurId(tache_titre, utilisateur_id);
 
        if (!tache) {
-            return res.status(401).json({ message: "Tache non trouvé" });
+            return res.status(404).json({ message: "Tache non trouvé" });
         }
 
         const tache_id = tache.id;
@@ -236,7 +236,7 @@ const ModifierLeStatutPourUneTache = async (req, res) => {
     const utilisateur = await tachesModeles.trouverUtilisateurSelonCleAPI(cle_api);
 
     if (!utilisateur) {
-        return res.status(401).json({ message: "Utilisateur non trouvé." });
+        return res.status(404).json({ message: "Utilisateur non trouvé." });
     }
 
     const utilisateur_id = utilisateur.id;
@@ -244,7 +244,7 @@ const ModifierLeStatutPourUneTache = async (req, res) => {
     const tache = await tachesModeles.trouverTacheSelonIdEtUtilisateurId(id, utilisateur_id); // Pour s'assurer du bonne utilisateur!
 
     if (!tache) {
-        return res.status(401).json({ message: "Tâche non trouvée." });
+        return res.status(404).json({ message: "Tâche non trouvée." });
     }
 
     const tache_id = tache.id;
@@ -292,7 +292,7 @@ const ModifierLeStatutPourUneSousTache = async (req, res) => {
     const utilisateur = await tachesModeles.trouverUtilisateurSelonCleAPI(cle_api);
 
     if (!utilisateur) {
-        return res.status(401).json({ message: "Utilisateur non trouvé." });
+        return res.status(404).json({ message: "Utilisateur non trouvé." });
     }
 
     const utilisateur_id = utilisateur.id;
@@ -300,7 +300,7 @@ const ModifierLeStatutPourUneSousTache = async (req, res) => {
     const sous_tache = await tachesModeles.trouverSousTacheSelonIdEtUtilisateurId(id, utilisateur_id); // Pour s'assurer du bonne utilisateur!
 
     if (!sous_tache) {
-        return res.status(401).json({ message: "Tâche non trouvée." });
+        return res.status(404).json({ message: "Tâche non trouvée." });
     }
 
     const sous_tache_id = sous_tache.id;

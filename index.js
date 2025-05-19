@@ -1,11 +1,26 @@
 import express from 'express';
 import tachesRouter from './src/routes/taches.routes.js';
 
+// Importation du module swagger-ui-express
+import swaggerUi from 'swagger-ui-express';
+// Le fichier qui contient la documentation au format JSON, ajustez selon votre projet
+import fs from 'fs';
+const swaggerDocument = JSON.parse(fs.readFileSync('./src/config/documentation.json', 'utf8'));
+
+// Options le l'interface, changez le titre "Demo API" pour le nom de votre projet 
+const swaggerOptions = {
+    customCss: '.swagger-ui .topbar { display: none }',
+    customSiteTitle: "Demo API"
+};
+
+
 const app = express();
 app.use(express.json());
 
 import cors from 'cors';
 app.use(cors());
+
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument, swaggerOptions));
 
 // Associer les routes aux bons fichiers
 app.use('/', tachesRouter);
