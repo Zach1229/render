@@ -243,7 +243,7 @@ const trouverUtilisateurSelonCourriel = (courriel) => {
     });
 };
 
-export {
+export default {
     getTousTachesSelon,
     getTachesNonCompleteesSelon,
     supprimerTache,
