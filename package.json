@@ -20,11 +20,7 @@
     "bcrypt": "^5.1.1",
     "eslint": "^9.20.1",
     "generate-api-key": "^1.0.2",
-<<<<<<< HEAD
-    "nodemon": "^3.1.9"
-=======
     "nodemon": "^3.1.9",
     "pg": "^8.14.0"
->>>>>>> bbcb56b1ff3a551048e16fe953ad34a73df8bbb3
   }
 }
