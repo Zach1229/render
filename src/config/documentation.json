@@ -261,7 +261,7 @@
             "name": "complete",
             "in": "path",
             "required": true,
-            "schema": { "type": "boolean" }
+            "schema": { "type": "integer" }
           }
         ],
         "responses": {
