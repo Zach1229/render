@@ -1,5 +1,5 @@
 // Ancienne connexion à MySQL
-// const db = require("../config/db");
+// const db = require("../config/pg");
 // Nouvelle connexion à PostGreSQL
 
 import db from "../config/db_pg.js";
